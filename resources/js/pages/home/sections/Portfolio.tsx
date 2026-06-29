@@ -96,9 +96,13 @@ export default function Portfolio({ portfolios }: PortfolioSectionProps) {
                                 </div>
                                 <div className="hidden flex-1 flex-col justify-center p-5 lg:flex">
                                     <div className="mb-1.5 font-mono text-[10px] tracking-widest text-brand-accent uppercase">
-                                        {p.category
-                                            ?.map((c) => c.replace(/_/g, ' '))
-                                            .join(', ') || 'PROJECT'}
+                                        {p.category.length > 0
+                                            ? p.category
+                                                  .map((c) =>
+                                                      c.replace(/_/g, ' '),
+                                                  )
+                                                  .join(', ')
+                                            : 'PROJECT'}
                                     </div>
                                     <div className="mb-1 font-display text-base leading-tight font-bold text-brand-black">
                                         {p.title}

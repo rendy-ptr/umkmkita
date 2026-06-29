@@ -29,7 +29,10 @@ import {
     Headphones,
     MapPin,
     Calendar,
-    Bell
+    Bell,
+    Palette,
+    Bot,
+    Headset
 } from 'lucide-react';
 
 export const IconRegistry: Record<string, LucideIcon> = {
@@ -62,7 +65,10 @@ export const IconRegistry: Record<string, LucideIcon> = {
     Headphones,
     MapPin,
     Calendar,
-    Bell
+    Bell,
+    Palette,
+    Bot,
+    Headset
 };
 
 export const getIconComponent = (name: string): LucideIcon => {

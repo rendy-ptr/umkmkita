@@ -154,6 +154,10 @@
     --color-brand-accent: #00a36c;
     --color-brand-secondary: #2d6a4f;
     --color-brand-green-l: #b7e4c7;
+
+    --color-brand-yellow: #f4d03f;
+    --color-brand-orange: #eb984e;
+
     --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Fraunces', Georgia, serif;
     --font-mono: 'DM Mono', monospace;
@@ -275,7 +279,8 @@
 }
 
 @keyframes gradient-x {
-    0%, 100% {
+    0%,
+    100% {
         background-size: 200% 200%;
         background-position: left center;
     }
@@ -296,6 +301,32 @@
 
 .animate-gradient-x {
     animation: gradient-x 15s ease infinite;
+}
+
+@keyframes orb-float {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+}
+
+@keyframes orb-float-reverse {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(-30px, 50px) scale(0.95);
+    }
+    66% {
+        transform: translate(20px, -20px) scale(1.05);
+    }
 }
 
 .animate-move-dots {

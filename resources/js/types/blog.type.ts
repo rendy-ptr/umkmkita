@@ -1,18 +1,17 @@
+export interface ContentBlock {
+    subheading: string;
+    paragraph: string;
+}
+
 export interface BlogItem {
     id: number;
-    category: {
-        value: string;
-        label: string;
-    };
-    image: string;
     title: string;
+    description: string;
+    hero_image: string;
+    quote?: string | null;
+    content_blocks?: ContentBlock[] | null;
+    category: string[];
+    is_published: boolean;
+    published_at: string;
     created_at: string;
-    desc: string;
-    subHeading1: string;
-    content1: string;
-    quote: string;
-    subHeading2: string;
-    content2: string;
-    subHeading3: string;
-    content3: string;
 }

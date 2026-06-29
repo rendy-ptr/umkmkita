@@ -49,7 +49,7 @@ export default function Blog({ blogs }: BlogProps) {
                         >
                             <div className="aspect-[16/9] w-full overflow-hidden border-b-2 border-brand-black bg-brand-gray-2">
                                 <img
-                                    src={blog.image}
+                                    src={blog.hero_image}
                                     alt={blog.title}
                                     loading="lazy"
                                     className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -58,7 +58,13 @@ export default function Blog({ blogs }: BlogProps) {
                             <div className="flex flex-1 flex-col p-5 lg:p-6">
                                 <div className="mb-2.5 flex items-center justify-between">
                                     <span className="font-mono text-[10px] font-bold tracking-widest text-brand-accent uppercase">
-                                        {blog.category.label}
+                                        {blog.category.length > 0
+                                            ? blog.category
+                                                  .map((c) =>
+                                                      c.replace(/_/g, ' '),
+                                                  )
+                                                  .join(', ')
+                                            : 'BLOG'}
                                     </span>
                                     <span className="font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
                                         {blog.created_at}
@@ -67,15 +73,16 @@ export default function Blog({ blogs }: BlogProps) {
                                 <h3 className="mb-2 font-display text-[17px] leading-[1.4] font-bold text-brand-black">
                                     {blog.title}
                                 </h3>
-                                <p className="mb-6 text-xs leading-relaxed text-brand-gray-5 line-clamp-3">
-                                    {blog.desc}
+                                <p className="mb-6 line-clamp-3 text-xs leading-relaxed text-brand-gray-5">
+                                    {blog.description}
                                 </p>
                                 <div className="mt-auto border-t border-brand-gray-2 pt-4">
                                     <Link
                                         href={blogRoute.show.url(blog.id)}
                                         className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-gray-4 transition-colors hover:text-brand-accent"
                                     >
-                                        Baca Selengkapnya <ArrowRight size={12} />
+                                        Baca Selengkapnya{' '}
+                                        <ArrowRight size={12} />
                                     </Link>
                                 </div>
                             </div>

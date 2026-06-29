@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Lock } from 'lucide-react';
 import { getIconComponent } from '@/components/IconRegistry';
+import HeroGradient from '@/components/marketing/HeroGradient';
 import MarketingLayout from '@/layouts/marketing-layout';
 import { getImageUrl } from '@/lib/utils';
 import type { PortfolioItem } from '@/types/portfolio.type';
@@ -44,16 +45,9 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                 initial="hidden"
                 animate="show"
                 variants={containerVariants}
-                className="animate-gradient-x from-brand-yellow to-brand-yellow relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r via-brand-green-l px-6 pt-32 pb-16 lg:px-10 lg:pt-40 lg:pb-24"
+                className="animate-gradient-x relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r from-brand-yellow via-brand-green-l to-brand-yellow px-6 pt-32 pb-16 lg:px-10 lg:pt-40 lg:pb-24"
             >
-                <div
-                    className="animate-move-dots pointer-events-none absolute inset-0 opacity-20"
-                    style={{
-                        backgroundImage:
-                            'radial-gradient(#1A1A1A 2px, transparent 0)',
-                        backgroundSize: '32px 32px',
-                    }}
-                />
+                <HeroGradient />
 
                 <div className="section-container relative z-10 mx-auto max-w-7xl">
                     <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
@@ -150,19 +144,24 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                 <div className="section-container mx-auto max-w-6xl">
                     <div className="grid gap-16 lg:grid-cols-[1fr_320px]">
                         <div className="flex flex-col gap-16">
-                            {portfolio.content_blocks && portfolio.content_blocks.length > 0 && portfolio.content_blocks.map((block, idx) => (
-                                <motion.div key={idx} variants={itemVariants}>
-                                    <h2 className="mb-6 flex items-center gap-3 font-display text-3xl font-black text-brand-black lg:text-4xl">
-                                        <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                            {idx + 1}
-                                        </span>
-                                        {block.subheading}
-                                    </h2>
-                                    <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
-                                        {block.paragraph}
-                                    </p>
-                                </motion.div>
-                            ))}
+                            {portfolio.content_blocks &&
+                                portfolio.content_blocks.length > 0 &&
+                                portfolio.content_blocks.map((block, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        variants={itemVariants}
+                                    >
+                                        <h2 className="mb-6 flex items-center gap-3 font-display text-3xl font-black text-brand-black lg:text-4xl">
+                                            <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
+                                                {idx + 1}
+                                            </span>
+                                            {block.subheading}
+                                        </h2>
+                                        <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
+                                            {block.paragraph}
+                                        </p>
+                                    </motion.div>
+                                ))}
 
                             <motion.div
                                 variants={itemVariants}
@@ -170,7 +169,8 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                             >
                                 <h2 className="mb-6 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
                                     <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                        {(portfolio.content_blocks?.length || 0) + 1}
+                                        {(portfolio.content_blocks?.length ||
+                                            0) + 1}
                                     </span>
                                     Tantangan Utama
                                 </h2>
@@ -182,7 +182,8 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                             <motion.div variants={itemVariants}>
                                 <h2 className="mb-6 flex items-center gap-3 font-display text-3xl font-black text-brand-black lg:text-4xl">
                                     <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                        {(portfolio.content_blocks?.length || 0) + 2}
+                                        {(portfolio.content_blocks?.length ||
+                                            0) + 2}
                                     </span>
                                     Solusi & Hasil
                                 </h2>
@@ -209,7 +210,7 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                                                         )}
                                                     </div>
                                                     <div className="relative z-10">
-                                                        <div className="mb-6 inline-flex rounded-xl border-2 border-brand-black bg-brand-accent p-3 text-white">
+                                                        <div className="mb-6 inline-flex rounded-xl border-2 border-brand-black bg-brand-black p-3 text-white transition-all duration-300 group-hover:bg-brand-accent">
                                                             {IconComponent && (
                                                                 <IconComponent
                                                                     size={28}
@@ -238,7 +239,8 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                                     <motion.div variants={itemVariants}>
                                         <h2 className="mb-6 flex items-center gap-3 font-display text-3xl font-black text-brand-black lg:text-4xl">
                                             <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                                {(portfolio.content_blocks?.length || 0) + 3}
+                                                {(portfolio.content_blocks
+                                                    ?.length || 0) + 3}
                                             </span>
                                             Hasil Website
                                         </h2>
@@ -268,7 +270,9 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                                                             </div>
                                                             <div className="aspect-video w-full overflow-hidden">
                                                                 <img
-                                                                    src={getImageUrl(img)}
+                                                                    src={getImageUrl(
+                                                                        img,
+                                                                    )}
                                                                     alt={`${portfolio.title} screenshot ${idx + 1}`}
                                                                     className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                                                                 />
@@ -283,23 +287,29 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                         </div>
 
                         <aside className="flex flex-col gap-12">
-                            {portfolio.category && portfolio.category.length > 0 && (
-                                <motion.div variants={itemVariants}>
-                                    <h3 className="mb-4 flex items-center gap-3 font-display text-xl font-black text-brand-black uppercase">
-                                        <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                            #
-                                        </span>
-                                        Kategori
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {portfolio.category.map((cat, idx) => (
-                                            <div key={idx} className="inline-block rounded-lg border-4 border-brand-black px-2 py-1 font-display text-xs font-black text-brand-black uppercase shadow-[2px_2px_0_0_#1A1A1A]">
-                                                {cat.replace(/_/g, ' ')}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
+                            {portfolio.category &&
+                                portfolio.category.length > 0 && (
+                                    <motion.div variants={itemVariants}>
+                                        <h3 className="mb-4 flex items-center gap-3 font-display text-xl font-black text-brand-black uppercase">
+                                            <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
+                                                #
+                                            </span>
+                                            Kategori
+                                        </h3>
+                                        <div className="flex flex-wrap gap-2">
+                                            {portfolio.category.map(
+                                                (cat, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        className="inline-block rounded-lg border-4 border-brand-black px-2 py-1 font-display text-xs font-black text-brand-black uppercase shadow-[2px_2px_0_0_#1A1A1A]"
+                                                    >
+                                                        {cat.replace(/_/g, ' ')}
+                                                    </div>
+                                                ),
+                                            )}
+                                        </div>
+                                    </motion.div>
+                                )}
 
                             <motion.div
                                 variants={itemVariants}

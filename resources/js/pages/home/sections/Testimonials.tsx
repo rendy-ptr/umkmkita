@@ -1,32 +1,29 @@
 import SectionEyebrow from '@/components/marketing/SectionEyebrow';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 
-const testimonials = [
-    {
-        stars: 5,
-        text: 'Dalam 3 bulan setelah website live, orderan naik 3x lipat. Sistem kasir dan WhatsApp otomatisnya sangat membantu operasional sehari-hari.',
-        avatar: 'AS',
-        name: 'Ahmad Syahrul',
-        role: 'Owner Batik Nusantara',
-    },
-    {
-        stars: 5,
-        text: 'Pengerjaan cepat, komunikatif, dan hasilnya melebihi ekspektasi. Portal administrasi desa kami sekarang jauh lebih transparan dan efisien.',
-        avatar: 'BR',
-        name: 'Budi Raharjo',
-        role: 'Kepala Desa Sukamaju',
-    },
-    {
-        stars: 5,
-        text: 'LMS kami sekarang punya 500+ siswa aktif tanpa ada kendala server sama sekali. Sistem payment gateway-nya juga berjalan mulus.',
-        avatar: 'SP',
-        name: 'Sinta Permata',
-        role: 'Direktur EduPro',
-    },
-];
+export interface TestimonialItem {
+    id: number;
+    name: string;
+    role: string;
+    text: string;
+    stars: number;
+}
 
-export default function Testimonials() {
+interface TestimonialsProps {
+    testimonials: TestimonialItem[];
+}
+
+export default function Testimonials({ testimonials }: TestimonialsProps) {
     const ref = useScrollReveal<HTMLElement>();
+
+    const getInitials = (name: string) => {
+        return name
+            .split(' ')
+            .map((n) => n[0])
+            .join('')
+            .substring(0, 2)
+            .toUpperCase();
+    };
 
     return (
         <section
@@ -48,34 +45,44 @@ export default function Testimonials() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {testimonials.map((t) => (
-                        <div
-                            key={t.name}
-                            className="group rounded-xl border-2 border-brand-black bg-brand-white p-7 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none lg:p-8"
-                        >
-                            <div className="mb-4 text-lg tracking-[2px] text-brand-accent">
-                                {'★'.repeat(t.stars)}
-                            </div>
-                            <p className="mb-6 font-display text-[16px] leading-[1.6] font-normal text-brand-black italic">
-                                "{t.text}"
-                            </p>
-                            <div className="mt-auto flex items-center gap-3 border-t border-brand-gray-2 pt-4">
-                                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-brand-black bg-brand-green-l font-display text-sm font-bold text-brand-black">
-                                    {t.avatar}
+                {testimonials.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {testimonials.map((t) => (
+                            <div
+                                key={t.id}
+                                className="group flex flex-col rounded-xl border-2 border-brand-black bg-brand-white p-7 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none lg:p-8"
+                            >
+                                <div className="mb-4 text-lg tracking-[2px] text-brand-accent">
+                                    {'★'.repeat(t.stars)}
                                 </div>
-                                <div>
-                                    <div className="text-sm font-bold text-brand-black">
-                                        {t.name}
+                                <p className="mb-6 font-display text-[16px] leading-[1.6] font-normal text-brand-black italic">
+                                    "{t.text}"
+                                </p>
+                                <div className="mt-auto flex items-center gap-3 border-t border-brand-gray-2 pt-4">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-brand-black bg-brand-green-l font-display text-sm font-bold text-brand-black">
+                                        {getInitials(t.name)}
                                     </div>
-                                    <div className="text-[11px] text-brand-gray-4">
-                                        {t.role}
+                                    <div>
+                                        <div className="text-sm font-bold text-brand-black">
+                                            {t.name}
+                                        </div>
+                                        {t.role && (
+                                            <div className="text-[11px] text-brand-gray-4">
+                                                {t.role}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center rounded-2xl border-4 border-brand-black bg-brand-gray-1 py-16 text-center shadow-[4px_4px_0_0_#1A1A1A]">
+                        <p className="max-w-[400px] text-base leading-relaxed font-medium text-brand-black/80 lg:text-lg">
+                            Belum ada testimoni saat ini.
+                        </p>
+                    </div>
+                )}
             </div>
         </section>
     );

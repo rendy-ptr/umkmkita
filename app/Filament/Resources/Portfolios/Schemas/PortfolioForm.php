@@ -3,8 +3,8 @@
 namespace App\Filament\Resources\Portfolios\Schemas;
 
 use App\Enums\Category;
+use App\Enums\Icon;
 use App\Enums\Service;
-use App\Enums\SolutionIcon;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
@@ -64,7 +64,7 @@ class PortfolioForm
                                 Textarea::make('desc')->required(),
                                 Select::make('icon')
                                     ->label('Pilih Icon')
-                                    ->options(SolutionIcon::class)
+                                    ->options(Icon::class)
                                     ->searchable()
                                     ->required(),
                             ])
@@ -73,6 +73,8 @@ class PortfolioForm
                     ->columnSpanFull(),
                 FileUpload::make('gallery')
                     ->image()
+                    ->disk('public')
+                    ->directory('portfolio_galleries')
                     ->multiple()
                     ->columnSpanFull(),
             ]);

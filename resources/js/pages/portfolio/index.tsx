@@ -7,6 +7,7 @@ import {
     index as portfolioIndex,
     show as portfolioShow,
 } from '@/actions/App/Http/Controllers/PortfolioController';
+import HeroGradient from '@/components/marketing/HeroGradient';
 
 import {
     Select,
@@ -100,16 +101,9 @@ export default function Portfolio({
 
             <section
                 ref={heroReveal}
-                className="scroll-reveal animate-gradient-x from-brand-yellow to-brand-yellow relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r via-brand-green-l px-6 pt-32 pb-16 text-center lg:px-10 lg:pt-40 lg:pb-20"
+                className="scroll-reveal animate-gradient-x relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r from-brand-yellow via-brand-green-l to-brand-yellow px-6 pt-32 pb-16 text-center lg:px-10 lg:pt-40 lg:pb-20"
             >
-                <div
-                    className="animate-move-dots pointer-events-none absolute inset-0 opacity-20"
-                    style={{
-                        backgroundImage:
-                            'radial-gradient(#1A1A1A 2px, transparent 0)',
-                        backgroundSize: '32px 32px',
-                    }}
-                />
+                <HeroGradient />
 
                 <div className="section-container relative z-10 mx-auto max-w-[800px]">
                     <div className="nb-shadow-sm mb-6 inline-flex items-center gap-2 rounded-full border-2 border-brand-black bg-brand-green-l px-4 py-1 text-xs font-bold text-brand-black">
@@ -192,41 +186,61 @@ export default function Portfolio({
                             </p>
                         </div>
                     ) : filteredPortfolios.length === 0 ? (
-                        <div className="bg-brand-yellow/20 flex min-h-[400px] flex-col items-center justify-center rounded-xl border-4 border-brand-black p-12 text-center shadow-[8px_8px_0_0_#1A1A1A] sm:col-span-2 lg:col-span-3">
-                            <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A]">
-                                <OctagonX
-                                    className="h-10 w-10 text-brand-accent"
-                                    strokeWidth={3}
-                                />
-                            </div>
-                            <h3 className="mb-4 font-display text-2xl font-black text-brand-black lg:text-3xl">
-                                Waduh, Nggak Ketemu Nih!
-                            </h3>
-                            <p className="mb-8 max-w-md text-brand-gray-5">
-                                Kami belum memiliki portofolio yang cocok dengan
-                                kriteria pencarian atau kategori yang Anda
-                                pilih. Coba gunakan kata kunci lain ya.
-                            </p>
-                            {(searchQuery || activeTab) && (
-                                <button
-                                    onClick={() => {
-                                        setSearchQuery('');
-                                        setActiveTab('');
-                                        router.get(
-                                            portfolioIndex.url(),
-                                            {},
-                                            {
-                                                preserveState: true,
-                                                replace: true,
-                                                preserveScroll: true,
-                                            },
-                                        );
+                        <div className="relative overflow-hidden rounded-2xl border-4 border-brand-black bg-brand-accent px-6 py-16 text-center text-white shadow-[8px_8px_0_0_#1A1A1A] sm:col-span-2 lg:col-span-3 lg:py-24">
+                            <div
+                                className="pointer-events-none absolute inset-0 opacity-15"
+                                style={{
+                                    backgroundImage:
+                                        'radial-gradient(#1A1A1A 2px, transparent 0), linear-gradient(#1A1A1A 1px, transparent 1px), linear-gradient(90deg, #1A1A1A 1px, transparent 1px)',
+                                    backgroundSize:
+                                        '24px 24px, 48px 48px, 48px 48px',
+                                }}
+                            />
+                            <div className="relative z-10 mx-auto flex max-w-[600px] flex-col items-center">
+                                <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full border-4 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A]">
+                                    <OctagonX
+                                        className="h-10 w-10 text-brand-black"
+                                        strokeWidth={3}
+                                    />
+                                </div>
+                                <h3
+                                    className="mb-4 whitespace-nowrap font-display font-black leading-[1.1] tracking-tight text-brand-black"
+                                    style={{
+                                        fontSize: 'clamp(28px, 5vw, 56px)',
                                     }}
-                                    className="inline-flex h-12 items-center justify-center rounded-xl border-2 border-brand-black bg-brand-accent px-8 font-mono text-sm font-bold text-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
                                 >
-                                    Reset Semua Filter
-                                </button>
-                            )}
+                                    Portofolio{' '}
+                                    <em className="text-brand-white italic underline decoration-brand-black decoration-4">
+                                        Nggak Ketemu
+                                    </em>
+                                </h3>
+                                <p className="mb-10 max-w-[500px] text-base font-medium leading-relaxed text-brand-black/80 lg:text-lg">
+                                    Kami belum menemukan portofolio yang sesuai
+                                    dengan pencarian atau kategori Anda saat
+                                    ini. Coba gunakan kata kunci yang lebih
+                                    umum ya!
+                                </p>
+                                {(searchQuery || activeTab) && (
+                                    <button
+                                        onClick={() => {
+                                            setSearchQuery('');
+                                            setActiveTab('');
+                                            router.get(
+                                                portfolioIndex.url(),
+                                                {},
+                                                {
+                                                    preserveState: true,
+                                                    replace: true,
+                                                    preserveScroll: true,
+                                                },
+                                            );
+                                        }}
+                                        className="inline-flex items-center gap-2.5 rounded-full border-2 border-brand-white bg-brand-black px-8 py-4 text-sm font-bold text-white shadow-[4px_4px_0_0_#FFF] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
+                                    >
+                                        Reset Filter Pencarian
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

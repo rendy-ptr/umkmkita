@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum SolutionIcon: string implements HasLabel
+enum Icon: string implements HasLabel
 {
     case ARMCHAIR = 'Armchair';
     case BANKNOTE = 'Banknote';
@@ -38,6 +38,9 @@ enum SolutionIcon: string implements HasLabel
     case MAP_PIN = 'MapPin';
     case CALENDAR = 'Calendar';
     case BELL = 'Bell';
+    case PALETTE = 'Palette';
+    case BOT = 'Bot';
+    case HEADSET = 'Headset';
 
     public function getLabel(): ?string
     {

@@ -30,6 +30,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PortfolioSeeder::class,
+            ServiceSeeder::class,
+            PromoSeeder::class,
+            PriceSeeder::class,
+            FaqSeeder::class,
+            BlogSeeder::class,
+            AdvantageSeeder::class,
+            TestimonialSeeder::class,
         ]);
     }
 }

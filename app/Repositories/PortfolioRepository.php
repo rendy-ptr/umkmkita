@@ -22,4 +22,9 @@ class PortfolioRepository
 
         return $query->paginate($perPage)->withQueryString();
     }
+
+    public function getAll()
+    {
+        return Portfolio::all();
+    }
 }

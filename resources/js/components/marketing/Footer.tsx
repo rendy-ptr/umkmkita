@@ -13,10 +13,9 @@ const layanan = [
 const menu = [
     { label: 'Beranda', href: '/' },
     { label: 'Layanan', href: '/layanan' },
-    { label: 'Portfolio', href: '/portfolio' },
-    { label: 'Promo', href: '/promo' },
     { label: 'Harga', href: '/harga' },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Promo', href: '/promo' },
+    { label: 'FAQ', href: '/faq' },
 ];
 
 const area = [

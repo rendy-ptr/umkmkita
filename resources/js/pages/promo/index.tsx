@@ -1,37 +1,20 @@
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
+import HeroGradient from '@/components/marketing/HeroGradient';
 
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import MarketingLayout from '@/layouts/marketing-layout';
 
-const promos = [
-    {
-        title: 'Promo Paket Launching Usaha',
-        badge: 'Diskon 20%',
-        code: 'UMKMLAUNCH20',
-        desc: 'Spesial buat Anda yang baru memulai usaha. Dapatkan potongan harga 20% untuk paket pembuatan website Standard Biz + Free Desain Logo sederhana.',
-        expiry: 'Berakhir 30 Juni 2026',
-        color: 'bg-brand-green-l',
-    },
-    {
-        title: 'Bundling WhatsApp Bot & POS',
-        badge: 'Hemat Rp 500K',
-        code: 'BUNDLESUPER',
-        desc: 'Optimalkan sistem kasir dan chat otomatis secara bersamaan. Hubungkan sistem inventory website dengan notifikasi WhatsApp realtime.',
-        expiry: 'Berakhir 15 Juli 2026',
-        color: 'bg-brand-white',
-    },
-    {
-        title: 'Promo Cash Back Pelunasan Di Awal',
-        badge: 'Cashback 10%',
-        code: 'LUNASCASH',
-        desc: 'Lakukan pelunasan penuh di awal proyek (tanpa sistem DP) dan dapatkan cashback langsung 10% dari total nilai proyek.',
-        expiry: 'Berlaku Selamanya',
-        color: 'bg-brand-white',
-    },
-];
+export interface PromoData {
+    id: number;
+    title: string;
+    description: string;
+    code: string;
+    badge: string;
+    expired_at: string;
+}
 
-export default function Promo() {
+export default function Promo({ promos }: { promos: PromoData[] }) {
     const heroReveal = useScrollReveal<HTMLDivElement>();
     const gridReveal = useScrollReveal<HTMLDivElement>();
     const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -48,19 +31,11 @@ export default function Promo() {
         <MarketingLayout>
             <Head title="Promo & Diskon Pembuatan Website UMKM — UMKMKITA" />
 
-            {/* Hero Section */}
             <section
                 ref={heroReveal}
                 className="scroll-reveal animate-gradient-x relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r from-brand-yellow via-brand-green-l to-brand-yellow px-6 pt-32 pb-16 text-center lg:px-10 lg:pt-40 lg:pb-20"
             >
-                <div
-                    className="animate-move-dots pointer-events-none absolute inset-0 opacity-20"
-                    style={{
-                        backgroundImage:
-                            'radial-gradient(#1A1A1A 2px, transparent 0)',
-                        backgroundSize: '32px 32px',
-                    }}
-                />
+                <HeroGradient />
 
                 <div className="section-container relative z-10 mx-auto max-w-[800px]">
                     <div className="nb-shadow-sm mb-6 inline-flex items-center gap-2 rounded-full border-2 border-brand-black bg-brand-green-l px-4 py-1 text-xs font-bold text-brand-black">
@@ -81,7 +56,6 @@ export default function Promo() {
                 </div>
             </section>
 
-            {/* Promos Grid Section */}
             <section
                 ref={gridReveal}
                 className="scroll-reveal bg-brand-gray-1 px-6 py-16 lg:px-10 lg:py-24"
@@ -90,8 +64,8 @@ export default function Promo() {
                     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {promos.map((p) => (
                             <div
-                                key={p.title}
-                                className={`relative flex flex-col rounded-2xl border-3 border-brand-black p-8 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none ${p.color}`}
+                                key={p.id}
+                                className="relative flex flex-col rounded-2xl border-3 border-brand-black bg-brand-white p-8 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
                             >
                                 <span className="absolute top-4 right-4 rounded-lg border-2 border-brand-black bg-brand-accent px-3 py-1 font-mono text-[9px] font-bold text-white uppercase">
                                     {p.badge}
@@ -102,10 +76,9 @@ export default function Promo() {
                                 </h3>
 
                                 <p className="mb-6 text-xs leading-relaxed text-brand-gray-5">
-                                    {p.desc}
+                                    {p.description}
                                 </p>
 
-                                {/* Code Copy Box */}
                                 <div className="mb-6 rounded-xl border-2 border-dashed border-brand-black bg-brand-white p-4 text-center">
                                     <span className="mb-1 block font-mono text-[10px] tracking-wider text-brand-gray-4 uppercase">
                                         Salin Kode Voucher
@@ -127,7 +100,14 @@ export default function Promo() {
 
                                 <div className="mt-auto flex items-center justify-between border-t border-brand-gray-2 pt-4">
                                     <span className="font-mono text-[10px] text-brand-gray-4 uppercase">
-                                        {p.expiry}
+                                        Berakhir,
+                                        {new Date(
+                                            p.expired_at,
+                                        ).toLocaleDateString('id-ID', {
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric',
+                                        })}
                                     </span>
                                     <a
                                         href={`https://wa.me/6282329137621?text=Halo%20UMKMKITA,%20saya%20ingin%20klaim%20kode%20promo%20${p.code}`}

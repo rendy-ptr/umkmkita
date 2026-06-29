@@ -1,35 +1,14 @@
 import { ArrowRight } from 'lucide-react';
+import { getIconComponent } from '@/components/IconRegistry';
 import SectionEyebrow from '@/components/marketing/SectionEyebrow';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import type { AdvantageItem } from '@/types/advantage.type';
 
-const reasons = [
-    {
-        num: '01',
-        icon: 'palette',
-        title: 'Desain Custom, Bukan Template',
-        desc: 'Setiap pixel dirancang khusus sesuai identitas brand bisnis Anda. Bukan WordPress theme yang pasaran.',
-    },
-    {
-        num: '02',
-        icon: 'smart_toy',
-        title: 'AI & Otomasi Terintegrasi',
-        desc: 'Chatbot WhatsApp, auto-reply, dan analitik cerdas bekerja 24/7 untuk bisnis Anda.',
-    },
-    {
-        num: '03',
-        icon: 'support_agent',
-        title: 'Support Tanpa Batas Waktu',
-        desc: 'Tim dedicated siap membantu kapan saja. Bukan hanya saat build, tapi sepanjang perjalanan digital Anda.',
-    },
-    {
-        num: '04',
-        icon: 'rocket_launch',
-        title: 'Tech Stack Modern & Scalable',
-        desc: 'Dibangun dengan Laravel 13, React, dan infrastruktur cloud — siap handle ribuan pengunjung.',
-    },
-];
+interface WhyUsProps {
+    advantages: AdvantageItem[];
+}
 
-export default function WhyUs() {
+export default function WhyUs({ advantages }: WhyUsProps) {
     const ref = useScrollReveal<HTMLElement>();
 
     return (
@@ -60,26 +39,30 @@ export default function WhyUs() {
                 </div>
 
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    {reasons.map((r) => (
-                        <div
-                            key={r.num}
-                            className="group rounded-xl border-2 border-brand-black bg-brand-white p-8 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none lg:p-10"
-                        >
-                            <div className="mb-5 flex items-center gap-4">
-                                <div className="flex h-12 w-12 items-center justify-center rounded-[10px] border-2 border-brand-black bg-brand-black text-white transition-all duration-300 group-hover:bg-brand-accent">
-                                    <span className="material-symbols-rounded text-2xl">
-                                        {r.icon}
-                                    </span>
+                    {advantages.map((a: AdvantageItem) => {
+                        const Icon = getIconComponent(a.icon);
+
+                        return (
+                            <div
+                                key={a.id}
+                                className="group rounded-xl border-2 border-brand-black bg-brand-white p-8 shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none lg:p-10"
+                            >
+                                <div className="mb-5 flex items-center gap-4">
+                                    <div className="flex h-12 w-12 items-center justify-center rounded-[10px] border-2 border-brand-black bg-brand-black text-white transition-all duration-300 group-hover:bg-brand-accent">
+                                        <span className="material-symbols-rounded text-2xl">
+                                            <Icon />
+                                        </span>
+                                    </div>
                                 </div>
+                                <div className="mb-3 font-display text-xl font-bold text-brand-black">
+                                    {a.title}
+                                </div>
+                                <p className="text-sm leading-[1.75] text-brand-gray-5">
+                                    {a.description}
+                                </p>
                             </div>
-                            <div className="mb-3 font-display text-xl font-bold text-brand-black">
-                                {r.title}
-                            </div>
-                            <p className="text-sm leading-[1.75] text-brand-gray-5">
-                                {r.desc}
-                            </p>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </div>
         </section>

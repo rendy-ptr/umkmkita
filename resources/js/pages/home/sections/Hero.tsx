@@ -1,5 +1,6 @@
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import { useEffect, useRef } from 'react';
+import HeroGradient from '@/components/marketing/HeroGradient';
 
 import { animateCount } from '@/lib/count';
 
@@ -38,14 +39,7 @@ function StatCount({ stat }: { stat: (typeof stats)[0] }) {
 export default function Hero() {
     return (
         <section className="animate-gradient-x relative flex min-h-svh flex-col justify-end overflow-hidden border-b-4 border-brand-black bg-gradient-to-r from-brand-yellow via-brand-green-l to-brand-yellow px-6 pt-[120px] pb-20 lg:px-10">
-            <div
-                className="animate-move-dots pointer-events-none absolute inset-0 opacity-20"
-                style={{
-                    backgroundImage:
-                        'radial-gradient(#1A1A1A 2px, transparent 0)',
-                    backgroundSize: '32px 32px',
-                }}
-            />
+            <HeroGradient />
 
             <div className="section-container relative z-10 w-full">
                 <div className="mb-7 inline-flex animate-[fadeUp_0.7s_0.3s_forwards] items-center gap-2 rounded-full border border-brand-secondary/20 px-4 py-1.5 text-[11px] font-medium tracking-widest text-brand-secondary uppercase opacity-0">
@@ -58,7 +52,7 @@ export default function Hero() {
                     style={{ fontSize: 'clamp(48px, 9vw, 130px)' }}
                 >
                     <span className="block overflow-hidden">
-                        <span className="block animate-[lineUp_0.9s_0.4s_forwards] opacity-0 pb-[0.1em]">
+                        <span className="block animate-[lineUp_0.9s_0.4s_forwards] pb-[0.1em] opacity-0">
                             Partner{' '}
                             <em className="text-brand-accent italic">
                                 Digital
@@ -66,7 +60,7 @@ export default function Hero() {
                         </span>
                     </span>
                     <span className="block overflow-hidden">
-                        <span className="block animate-[lineUp_0.9s_0.55s_forwards] opacity-0 pb-[0.1em]">
+                        <span className="block animate-[lineUp_0.9s_0.55s_forwards] pb-[0.1em] opacity-0">
                             UMKM Anda.
                         </span>
                     </span>

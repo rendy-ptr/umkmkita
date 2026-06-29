@@ -36,7 +36,7 @@ class PortfolioFactory extends Factory
         ];
 
         return [
-            'title' => $this->faker->company() . ' ' . $this->faker->randomElement(['Website', 'App', 'Platform', 'Portal', 'Dashboard', 'E-Commerce', 'Redesign']),
+            'title' => $this->faker->company().' '.$this->faker->randomElement(['Website', 'App', 'Platform', 'Portal', 'Dashboard', 'E-Commerce', 'Redesign']),
             'description' => $this->faker->paragraphs(3, true),
             'tagline' => $this->faker->catchPhrase(),
             'client' => $this->faker->company(),

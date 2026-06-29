@@ -8,6 +8,7 @@ const navLinks = [
     { label: 'Promo', href: '/promo' },
     { label: 'Harga', href: '/harga' },
     { label: 'Blog', href: '/blog' },
+    { label: 'FAQ', href: '/faq' },
 ];
 
 export default function Navbar() {
@@ -112,7 +113,6 @@ export default function Navbar() {
                         Mulai Project
                     </a>
 
-                    {/* Hamburger */}
                     <button
                         onClick={() => setMobileOpen(true)}
                         className="ml-3 flex cursor-pointer flex-col gap-1.5 rounded-lg border-2 border-brand-black p-2.5 transition-colors hover:bg-brand-accent hover:text-white md:hidden"

@@ -10,8 +10,9 @@ import {
     Lock,
     ArrowUpRight,
 } from 'lucide-react';
-
+import HeroGradient from '@/components/marketing/HeroGradient';
 import MarketingLayout from '@/layouts/marketing-layout';
+import { getImageUrl } from '@/lib/utils';
 import blogRoute from '@/routes/blog';
 import type { BlogItem } from '@/types/blog.type';
 
@@ -49,14 +50,7 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                 variants={containerVariants}
                 className="animate-gradient-x relative overflow-hidden border-b-4 border-brand-black bg-gradient-to-r from-brand-yellow via-brand-green-l to-brand-yellow px-6 pt-32 pb-24 lg:px-10 lg:pt-40 lg:pb-32"
             >
-                <div
-                    className="animate-move-dots pointer-events-none absolute inset-0 opacity-20"
-                    style={{
-                        backgroundImage:
-                            'radial-gradient(#1A1A1A 2px, transparent 0)',
-                        backgroundSize: '32px 32px',
-                    }}
-                />
+                <HeroGradient />
 
                 <div className="relative z-10 mx-auto max-w-4xl text-center">
                     <motion.div
@@ -83,7 +77,7 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                         variants={itemVariants}
                         className="mx-auto mb-10 max-w-3xl font-display text-xl font-bold text-brand-accent italic lg:text-2xl"
                     >
-                        "{blog.desc}"
+                        "{blog.description}"
                     </motion.p>
 
                     <motion.div
@@ -92,14 +86,20 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                     >
                         <div className="flex items-center gap-5">
                             <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-brand-black bg-brand-accent font-display text-2xl font-black text-white">
-                                U
+                                A
                             </div>
                             <div className="text-left">
                                 <div className="font-display text-xl font-black text-brand-black">
-                                    Tim Editor
+                                    Admin UMKMKITA
                                 </div>
                                 <div className="font-mono text-xs font-bold tracking-widest text-brand-gray-5 uppercase">
-                                    {blog.created_at}
+                                    {new Date(
+                                        blog.published_at || blog.created_at,
+                                    ).toLocaleDateString('id-ID', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                    })}
                                 </div>
                             </div>
                         </div>
@@ -153,54 +153,48 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                                     </div>
                                 </div>
                                 <img
-                                    src={blog.image}
+                                    src={getImageUrl(blog.hero_image)}
                                     alt={blog.title}
                                     className="aspect-[16/9] w-full object-cover lg:aspect-[2/1]"
                                 />
                             </div>
                             {/* Teks Artikel */}
                             <div className="prose prose-p:text-brand-gray-5 prose-p:leading-relaxed prose-headings:font-display prose-headings:font-black prose-headings:text-brand-black prose-strong:text-brand-black max-w-none">
-                                <h2 className="mt-12 mb-6 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
-                                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                        1
-                                    </span>
-                                    {blog.subHeading1}
-                                </h2>
-                                <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
-                                    {blog.content1}
-                                </p>
+                                {blog.content_blocks &&
+                                blog.content_blocks.length > 0 ? (
+                                    blog.content_blocks.map((block, index) => (
+                                        <div key={index}>
+                                            <h2 className="mt-12 mb-6 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
+                                                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
+                                                    {index + 1}
+                                                </span>
+                                                {block.subheading}
+                                            </h2>
+                                            <p className="text-lg leading-relaxed whitespace-pre-wrap text-brand-gray-5 lg:text-xl">
+                                                {block.paragraph}
+                                            </p>
 
-                                <div className="not-prose my-12 rounded-2xl border-4 border-brand-black bg-brand-green-l px-6 py-8 shadow-[6px_6px_0_0_#1A1A1A] lg:p-10">
-                                    <p className="font-display text-xl leading-snug font-black text-brand-black italic lg:text-xl">
-                                        "{blog.quote}"
+                                            {/* Tampilkan Quote setelah paragraf pertama jika ada */}
+                                            {index === 0 && blog.quote && (
+                                                <div className="not-prose my-12 rounded-2xl border-4 border-brand-black bg-brand-green-l px-6 py-8 shadow-[6px_6px_0_0_#1A1A1A] lg:p-10">
+                                                    <p className="font-display text-xl leading-snug font-black text-brand-black italic lg:text-xl">
+                                                        "{blog.quote}"
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
+                                        Konten belum tersedia.
                                     </p>
-                                </div>
-
-                                <h2 className="mt-12 mb-6 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
-                                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                        2
-                                    </span>
-                                    {blog.subHeading2}
-                                </h2>
-                                <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
-                                    {blog.content2}
-                                </p>
-
-                                <h2 className="mt-12 mb-6 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
-                                    <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
-                                        3
-                                    </span>
-                                    {blog.subHeading3}
-                                </h2>
-                                <p className="text-lg leading-relaxed text-brand-gray-5 lg:text-xl">
-                                    {blog.content3}
-                                </p>
+                                )}
                             </div>
                         </motion.article>
 
                         <aside className="lg:col-span-4">
                             <div className="sticky top-32 flex flex-col gap-12">
-                                {blog.category && (
+                                {blog.category && blog.category.length > 0 && (
                                     <motion.div variants={itemVariants}>
                                         <h3 className="mb-4 flex items-center gap-3 font-display text-xl font-black text-brand-black uppercase">
                                             <span className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
@@ -208,8 +202,15 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                                             </span>
                                             Kategori
                                         </h3>
-                                        <div className="inline-block rounded-xl border-4 border-brand-black px-4 py-1.5 font-display text-xs font-black text-brand-black uppercase shadow-[4px_4px_0_0_#1A1A1A]">
-                                            {blog.category.label}
+                                        <div className="flex flex-wrap gap-2">
+                                            {blog.category.map((cat, i) => (
+                                                <div
+                                                    key={i}
+                                                    className="inline-block rounded-xl border-4 border-brand-black px-4 py-1.5 font-display text-xs font-black text-brand-black uppercase shadow-[4px_4px_0_0_#1A1A1A]"
+                                                >
+                                                    {cat.replace(/_/g, ' ')}
+                                                </div>
+                                            ))}
                                         </div>
                                     </motion.div>
                                 )}
@@ -244,10 +245,21 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                                                     </div> */}
                                                     <div className="flex flex-col">
                                                         <span className="mb-2 font-mono text-[10px] font-bold tracking-widest text-brand-accent uppercase">
-                                                            {
-                                                                other.category
-                                                                    .label
-                                                            }
+                                                            {other.category &&
+                                                            other.category
+                                                                .length > 0
+                                                                ? other.category
+                                                                      .map(
+                                                                          (c) =>
+                                                                              c.replace(
+                                                                                  /_/g,
+                                                                                  ' ',
+                                                                              ),
+                                                                      )
+                                                                      .join(
+                                                                          ', ',
+                                                                      )
+                                                                : 'BLOG'}
                                                         </span>
                                                         <h4 className="text-md font-display leading-snug font-bold text-brand-black">
                                                             {other.title}
