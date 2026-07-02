@@ -1,78 +1,105 @@
-const articles = [
-    {
-        cat: 'Tips Website',
-        title: '7 Alasan UMKM Harus Punya Website di 2025',
-        date: '28 Apr 2025',
-        href: '#',
-    },
-    {
-        cat: 'E-Commerce',
-        title: 'Panduan Toko Online Sukses Setup QRIS',
-        date: '22 Apr 2025',
-        href: '#',
-    },
-    {
-        cat: 'AI & Teknologi',
-        title: 'Bagaimana AI Membantu Website UMKM',
-        date: '18 Apr 2025',
-        href: '#',
-    },
-];
+import { Link } from '@inertiajs/react';
+import { ArrowRight, Calendar, MessageCircle } from 'lucide-react';
+import SectionEyebrow from '@/components/marketing/SectionEyebrow';
+import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import blogRoute from '@/routes/blog';
+import type { BlogItem } from '@/types/blog.type';
 
-export default function Blog() {
+interface BlogProps {
+    blogs: BlogItem[];
+}
+
+export default function Blog({ blogs }: BlogProps) {
+    const ref = useScrollReveal<HTMLElement>();
+
     return (
-        <section id="blog" className="bg-[#EBEBE6] px-10 py-24 max-md:px-5">
-            <div className="mb-12 flex flex-wrap items-end justify-between gap-5">
-                <div>
-                    <div className="mb-4 flex items-center gap-3">
-                        <div className="h-px w-6 bg-[#00A36C]" />
-                        <span className="font-mono text-[11px] font-medium tracking-[0.14em] text-[#00A36C] uppercase">
-                            Jurnal
-                        </span>
+        <section
+            ref={ref}
+            id="blog"
+            className="scroll-reveal bg-brand-gray-1 px-6 py-24 lg:px-10 lg:py-32"
+        >
+            <div className="section-container">
+                <div className="mb-12 flex flex-wrap items-end justify-between gap-5">
+                    <div>
+                        <SectionEyebrow label="Blog & Insights" />
+                        <h2
+                            className="font-display leading-[1.05] font-bold tracking-tight text-brand-black"
+                            style={{ fontSize: 'clamp(30px, 5vw, 60px)' }}
+                        >
+                            Insight & Blog{' '}
+                            <em className="text-brand-accent italic">
+                                Digital
+                            </em>
+                            .
+                        </h2>
                     </div>
-                    <h2
-                        className="font-display leading-[1.05] font-bold tracking-tight text-[#1A1A1A]"
-                        style={{ fontSize: 'clamp(30px, 5vw, 60px)' }}
+                    <Link
+                        href={blogRoute.index.url()}
+                        className="inline-flex items-center gap-2 rounded-full border-2 border-brand-black bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
                     >
-                        Jurnal<em className="text-[#00A36C] italic">.</em>
-                    </h2>
+                        Semua Artikel <ArrowRight size={16} />
+                    </Link>
                 </div>
-                <a
-                    href="#"
-                    className="inline-flex items-center gap-2 border-b border-[#1A1A1A] pb-0.5 text-sm font-medium text-[#1A1A1A] transition-colors hover:border-[#00A36C] hover:text-[#00A36C]"
-                >
-                    Semua Artikel →
-                </a>
-            </div>
 
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {articles.map((a) => (
-                    <a
-                        key={a.title}
-                        href={a.href}
-                        className="group cursor-pointer overflow-hidden rounded-xl border-2 border-[#1A1A1A] bg-[#F5F5F0] shadow-[6px_6px_0_#1A1A1A] transition-all hover:translate-x-1.5 hover:translate-y-1.5 hover:shadow-none"
-                    >
-                        <div className="aspect-[16/9] w-full overflow-hidden bg-[#DEDEDA]">
-                            <img
-                                src="/artikel.jpg"
-                                alt={a.title}
-                                loading="lazy"
-                                className="block h-full w-full object-cover"
-                            />
-                        </div>
-                        <div className="p-5">
-                            <div className="mb-2 font-mono text-[10px] tracking-widest text-[#00A36C] uppercase">
-                                {a.cat}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {blogs.slice(0, 3).map((blog) => (
+                        <article
+                            key={blog.id}
+                            className="group flex flex-col overflow-hidden rounded-xl border-2 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
+                        >
+                            <div className="aspect-[16/9] w-full overflow-hidden border-b-2 border-brand-black bg-brand-gray-2">
+                                <img
+                                    src={blog.hero_image}
+                                    alt={blog.title}
+                                    loading="lazy"
+                                    className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
                             </div>
-                            <div className="mb-2 font-display text-[17px] leading-[1.35] font-bold text-[#1A1A1A]">
-                                {a.title}
+                            <div className="flex flex-1 flex-col p-5 lg:p-6">
+                                <div className="mb-2.5 flex items-center justify-between">
+                                    <span className="font-mono text-[10px] font-bold tracking-widest text-brand-accent uppercase">
+                                        {blog.category.length > 0
+                                            ? blog.category
+                                                  .map((c) =>
+                                                      c.replace(/_/g, ' '),
+                                                  )
+                                                  .join(', ')
+                                            : 'BLOG'}
+                                    </span>
+                                    <span className="flex items-center gap-1 font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
+                                        <Calendar size={12} />
+                                        {new Date(
+                                            blog.published_at,
+                                        ).toLocaleDateString('id-ID', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                        })}
+                                    </span>
+                                </div>
+                                <h3 className="mb-2 font-display text-[17px] leading-[1.4] font-bold text-brand-black">
+                                    {blog.title}
+                                </h3>
+                                <p className="mb-6 line-clamp-3 text-xs leading-relaxed text-brand-gray-5">
+                                    {blog.description}
+                                </p>
+                                <div className="mt-auto flex items-center justify-between border-t border-brand-gray-2 pt-4">
+                                    <Link
+                                        href={blogRoute.show.url(blog.id)}
+                                        className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-gray-4 transition-colors hover:text-brand-accent"
+                                    >
+                                        Baca Selengkapnya{' '}
+                                        <ArrowRight size={12} />
+                                    </Link>
+                                    <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-brand-gray-4">
+                                        <MessageCircle size={14} />
+                                        <span>{blog.comments_count ?? 0}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="text-xs text-[#8C8880]">
-                                {a.date}
-                            </div>
-                        </div>
-                    </a>
-                ))}
+                        </article>
+                    ))}
+                </div>
             </div>
         </section>
     );

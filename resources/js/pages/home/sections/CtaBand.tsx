@@ -1,38 +1,76 @@
+import { Link } from '@inertiajs/react';
+import { ArrowRight } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+
 export default function CtaBand() {
+    const ref = useScrollReveal<HTMLElement>();
+
     return (
-        <section className="relative overflow-hidden bg-[#1A1A1A] px-10 py-24 text-center text-white max-md:px-5">
-            <div
-                className="pointer-events-none absolute -top-48 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full"
-                style={{
-                    background:
-                        'radial-gradient(ellipse, rgba(45,106,79,0.25) 0%, transparent 65%)',
-                }}
-            />
-            <h2
-                className="relative z-10 mb-5 font-display leading-none font-black tracking-tight"
-                style={{ fontSize: 'clamp(36px, 6vw, 80px)' }}
-            >
-                Wujudkan Ide Besar{' '}
-                <em className="text-[#B7E4C7] italic">Anda</em>.
-            </h2>
-            <p className="relative z-10 mx-auto mb-10 max-w-[420px] text-base font-light text-white/60">
-                Konsultasi gratis hari ini. Tim kami siap membantu bisnis Anda
-                go digital.
-            </p>
-            <div className="relative z-10 flex flex-wrap items-center justify-center gap-3.5">
-                <a
-                    href="https://wa.me/6282329137621"
-                    target="_blank"
-                    className="inline-flex items-center gap-2.5 rounded-full border-2 border-[#F5F5F0] bg-[#F5F5F0] px-8 py-3.5 text-sm font-semibold text-[#1A1A1A] transition-all hover:bg-transparent hover:text-white"
-                >
-                    Mulai Sekarang
-                </a>
-                <a
-                    href="mailto:hello@umkmkita.id"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm text-white/70 transition-all hover:border-white/60 hover:text-white"
-                >
-                    hello@umkmkita.id
-                </a>
+        <section
+            ref={ref}
+            className="scroll-reveal bg-brand-white px-6 py-20 lg:px-10 lg:py-28"
+        >
+            <div className="section-container nb-shadow relative overflow-hidden rounded-2xl border-4 border-brand-black bg-brand-accent px-6 py-16 text-center text-white lg:py-24">
+                <div
+                    className="pointer-events-none absolute inset-0 opacity-15"
+                    style={{
+                        backgroundImage:
+                            'radial-gradient(#1A1A1A 2px, transparent 0), linear-gradient(#1A1A1A 1px, transparent 1px), linear-gradient(90deg, #1A1A1A 1px, transparent 1px)',
+                        backgroundSize: '24px 24px, 48px 48px, 48px 48px',
+                    }}
+                />
+
+                <div className="relative z-10 mx-auto max-w-[800px]">
+                    <div className="nb-shadow-sm mb-6 inline-flex items-center gap-2 rounded-full border-2 border-brand-black bg-brand-white px-4 py-1.5 text-xs font-bold text-brand-black">
+                        <span className="h-2 w-2 animate-pulse rounded-full bg-brand-accent" />
+                        Slot Konsultasi Terbatas Minggu Ini!
+                    </div>
+
+                    <h2
+                        className="mb-6 font-display leading-[1.1] font-black tracking-tight text-brand-black"
+                        style={{ fontSize: 'clamp(32px, 6vw, 72px)' }}
+                    >
+                        Siap Kembangkan Bisnis <br />
+                        <em className="text-brand-white italic underline decoration-brand-black decoration-4">
+                            UMKM Anda?
+                        </em>
+                    </h2>
+
+                    <p className="mx-auto mb-10 max-w-[500px] text-base leading-relaxed font-medium text-brand-black/80 lg:text-lg">
+                        Mulai langkah awal digitalisasi sekarang. Konsultasikan
+                        ide Anda secara gratis dan dapatkan penawaran terbaik.
+                    </p>
+
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                        <a
+                            href="https://wa.me/6282329137621"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2.5 rounded-full border-2 border-brand-white bg-brand-black px-8 py-4 text-sm font-bold text-white shadow-[4px_4px_0_0_#FFF] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
+                        >
+                            Hubungi WhatsApp Kami
+                            <ArrowRight size={16} />
+                        </a>
+                        <Link
+                            href="/harga"
+                            className="inline-flex items-center gap-2.5 rounded-full border-2 border-brand-black bg-brand-white px-8 py-4 text-sm font-bold text-brand-black shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:bg-brand-gray-1 hover:shadow-none"
+                        >
+                            Lihat Paket Harga
+                        </Link>
+                    </div>
+
+                    <div className="mt-12 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-mono text-[10px] tracking-wider text-brand-black uppercase">
+                        <span className="flex items-center gap-1.5 font-bold">
+                            ✦ Domain & SSL Gratis
+                        </span>
+                        <span className="flex items-center gap-1.5 font-bold">
+                            ✦ 1 Bulan Maintenance Gratis
+                        </span>
+                        <span className="flex items-center gap-1.5 font-bold">
+                            ✦ Garansi Uang Kembali
+                        </span>
+                    </div>
+                </div>
             </div>
         </section>
     );
