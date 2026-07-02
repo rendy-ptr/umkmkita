@@ -26,8 +26,8 @@ class ChatBotController extends Controller
             return response()->json(['reply' => 'Sistem AI sedang tidak tersedia (API Key belum di-setting).'], 503);
         }
 
-        $services = Service::query()->get()->map(fn ($s) => "- {$s->title}: {$s->description} ({$s->price})")->join("\n");
-        $prices = Price::query()->get()->map(fn ($p) => "- Paket {$p->title} ({$p->price}): {$p->description}")->join("\n");
+        $services = Service::query()->get()->map(fn ($s) => "- {$s->title}: {$s->description}")->join("\n");
+        $prices = Price::query()->get()->map(fn ($p) => "- Paket {$p->title} (Rp " . number_format($p->price, 0, ',', '.') . "): {$p->description}")->join("\n");
         $faqs = Faq::query()->where('is_published', true)->get()->map(fn ($f) => "Q: {$f->question}\nA: {$f->answer}")->join("\n\n");
 
         $systemPrompt = "Kamu adalah asisten pintar untuk platform UMKMKITA. Gunakan bahasa Indonesia yang santai, ramah, dan profesional. Jawab pertanyaan pengguna secara singkat dan padat (maksimal 2 paragraf). Jangan berikan format markdown yang rumit.

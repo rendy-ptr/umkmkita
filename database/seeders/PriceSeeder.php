@@ -15,7 +15,7 @@ class PriceSeeder extends Seeder
         $prices = [
             [
                 'title' => 'Lite Page',
-                'price' => 'Rp 750.000',
+                'price' => 750000,
                 'description' => 'Sangat cocok untuk pemula, UKM mikro, landing page promo produk tunggal, atau kartu nama digital.',
                 'benefits' => [
                     '1 Halaman Landing Page',
@@ -29,7 +29,7 @@ class PriceSeeder extends Seeder
             ],
             [
                 'title' => 'Standard Biz',
-                'price' => 'Rp 1.500.000',
+                'price' => 1500000,
                 'description' => 'Ideal untuk profil perusahaan, UMKM berkembang, sekolah, yayasan, atau institusi yang ingin profil lengkap.',
                 'benefits' => [
                     'Hingga 5 Halaman Utama',
@@ -46,7 +46,7 @@ class PriceSeeder extends Seeder
             ],
             [
                 'title' => 'Custom Project',
-                'price' => 'Rp 2.999.000',
+                'price' => 2999000,
                 'description' => 'Untuk toko online profesional dengan sistem payment gateway otomatis, integrasi ongkir, atau sistem web kustom.',
                 'benefits' => [
                     'Halaman Unlimited',
