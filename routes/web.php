@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ChatBotController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HargaController;
 use App\Http\Controllers\HomeController;
@@ -49,6 +51,7 @@ Route::prefix('portfolio')->group(function () {
 Route::prefix('blog')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/{id}', [BlogController::class, 'show'])->name('blog.show');
+    Route::post('/{blog}/comments', [CommentController::class, 'store'])->name('blog.comments.store');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -56,3 +59,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+
+// API Routes
+Route::post('/api/chat', [ChatBotController::class, 'chat'])->name('api.chat');

@@ -5,7 +5,7 @@ export function animateCount(
     target: number,
     duration: number = 2000,
     suffix: string = '',
-    delay: number = 0
+    delay: number = 0,
 ) {
     animate(0, target, {
         duration: duration / 1000,

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blog extends Model
 {
     protected $fillable = [
+        'user_id',
         'title',
         'description',
         'hero_image',
@@ -23,6 +24,16 @@ class Blog extends Model
         'is_published' => 'boolean',
         'published_at' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     protected static function booted()
     {

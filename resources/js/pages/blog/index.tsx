@@ -1,5 +1,13 @@
 import { Head, Link, router } from '@inertiajs/react';
-import { ArrowRight, Search, Loader2, OctagonX, X } from 'lucide-react';
+import {
+    ArrowRight,
+    Search,
+    Loader2,
+    OctagonX,
+    X,
+    MessageCircle,
+    Calendar,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import {
@@ -18,6 +26,7 @@ import {
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import MarketingLayout from '@/layouts/marketing-layout';
 import { getImageUrl } from '@/lib/utils';
+import type { BlogItem } from '@/types/blog.type';
 
 interface CategoryOption {
     value: string;
@@ -36,15 +45,6 @@ interface PaginatedData<T> {
     links: { url: string | null; label: string; active: boolean }[];
 }
 
-interface BlogItem {
-    id: number;
-    title: string;
-    description: string;
-    hero_image: string;
-    published_at: string;
-    category: string[];
-}
-
 interface BlogProps {
     blogs: PaginatedData<BlogItem>;
     categories: CategoryOption[];
@@ -55,7 +55,7 @@ export default function Blog({ blogs, categories, filters }: BlogProps) {
     const [activeTab, setActiveTab] = useState(filters.category || '');
     const [searchQuery, setSearchQuery] = useState(filters.search || '');
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const heroReveal = useScrollReveal<HTMLDivElement>();
     const gridReveal = useScrollReveal<HTMLDivElement>();
 
@@ -212,7 +212,7 @@ export default function Blog({ blogs, categories, filters }: BlogProps) {
                                     />
                                 </div>
                                 <h3
-                                    className="mb-4 whitespace-nowrap font-display font-black leading-[1.1] tracking-tight text-brand-black"
+                                    className="mb-4 font-display leading-[1.1] font-black tracking-tight whitespace-nowrap text-brand-black"
                                     style={{
                                         fontSize: 'clamp(28px, 5vw, 56px)',
                                     }}
@@ -222,11 +222,11 @@ export default function Blog({ blogs, categories, filters }: BlogProps) {
                                         Nggak Ketemu
                                     </em>
                                 </h3>
-                                <p className="mb-10 max-w-[500px] text-base font-medium leading-relaxed text-brand-black/80 lg:text-lg">
+                                <p className="mb-10 max-w-[500px] text-base leading-relaxed font-medium text-brand-black/80 lg:text-lg">
                                     Kami belum menemukan artikel yang sesuai
                                     dengan pencarian atau kategori Anda saat
-                                    ini. Coba gunakan kata kunci yang lebih
-                                    umum ya!
+                                    ini. Coba gunakan kata kunci yang lebih umum
+                                    ya!
                                 </p>
                                 {(searchQuery || activeTab) && (
                                     <button
@@ -273,17 +273,25 @@ export default function Blog({ blogs, categories, filters }: BlogProps) {
                                                     )
                                                     .join(', ') || 'BLOG'}
                                             </span>
-                                            <span className="font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
-                                                {new Date(a.published_at || new Date()).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' })}
+                                            <span className="inline-flex items-center gap-1 font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
+                                                <Calendar size={12} />
+                                                {new Date(
+                                                    a.published_at ||
+                                                        new Date(),
+                                                ).toLocaleDateString('id-ID', {
+                                                    year: 'numeric',
+                                                    month: 'short',
+                                                    day: 'numeric',
+                                                })}
                                             </span>
                                         </div>
                                         <h3 className="mb-3 font-display text-lg leading-[1.4] font-bold text-brand-black">
                                             {a.title}
                                         </h3>
-                                        <p className="mb-6 text-xs leading-relaxed text-brand-gray-5 line-clamp-3">
+                                        <p className="mb-6 line-clamp-3 text-xs leading-relaxed text-brand-gray-5">
                                             {a.description}
                                         </p>
-                                        <div className="mt-auto border-t border-brand-gray-2 pt-4">
+                                        <div className="mt-auto flex items-center justify-between border-t border-brand-gray-2 pt-4">
                                             <Link
                                                 href={blogShow.url(a.id)}
                                                 className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-gray-4 transition-colors hover:text-brand-accent"
@@ -291,6 +299,12 @@ export default function Blog({ blogs, categories, filters }: BlogProps) {
                                                 Baca Selengkapnya{' '}
                                                 <ArrowRight size={12} />
                                             </Link>
+                                            <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-brand-gray-4">
+                                                <MessageCircle size={14} />
+                                                <span>
+                                                    {a.comments_count ?? 0}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </article>

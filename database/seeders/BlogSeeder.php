@@ -17,6 +17,7 @@ class BlogSeeder extends Seeder
         $data = [
             [
                 'id' => 1,
+                'user_id' => 1,
                 'title' => '7 Alasan UMKM Harus Punya Website di 2026 Bukan Cuma Instagram.',
                 'description' => 'Di era digital yang berkembang sangat pesat, banyak pelaku UMKM merasa cukup hanya dengan memiliki akun Instagram atau TikTok. Namun, tahukah Anda bahwa bergantung 100% pada media sosial adalah strategi yang berisiko?',
                 'hero_image' => 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80',
@@ -45,6 +46,7 @@ class BlogSeeder extends Seeder
             ],
             [
                 'id' => 2,
+                'user_id' => 1,
                 'title' => 'Panduan Toko Online Sukses: Setup QRIS hingga Integrasi Ongkir.',
                 'description' => 'Memiliki toko online bukan sekadar mengupload gambar produk. Di tahun 2025, konsumen menuntut kemudahan dan kecepatan dalam bertransaksi. Jika proses pembayaran Anda masih manual (cek mutasi manual), Anda berisiko kehilangan pembeli yang tidak sabar.',
                 'category' => [Category::ECOMMERCE->value, Category::TIPS_WEBSITE->value],
@@ -69,6 +71,7 @@ class BlogSeeder extends Seeder
             ],
             [
                 'id' => 3,
+                'user_id' => 1,
                 'title' => 'Bagaimana AI Membantu Website UMKM Konversi Lebih Tinggi.',
                 'description' => 'Artificial Intelligence (AI) bukan lagi sekadar tren teknologi untuk perusahaan besar. Pelaku UMKM kini bisa memanfaatkan AI untuk membuat website mereka bekerja lebih cerdas, bukan lebih keras.',
                 'category' => [Category::AI_AND_TECHNOLOGY->value, Category::TIPS_WEBSITE->value],
@@ -112,6 +115,7 @@ class BlogSeeder extends Seeder
         for ($i = 4; $i <= 15; $i++) {
             $data[] = [
                 'id' => $i,
+                'user_id' => 1,
                 'title' => $faker->sentence(rand(5, 8)).' (Data Test)',
                 'description' => $faker->paragraph(2),
                 'category' => [$faker->randomElement($categories)->value],

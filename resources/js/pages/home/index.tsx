@@ -10,6 +10,7 @@ import Hero from './sections/Hero';
 import Marquee from './sections/Marquee';
 import Portfolio from './sections/Portfolio';
 import Services from './sections/Services';
+import Statistic from './sections/Statistic';
 import Testimonials from './sections/Testimonials';
 import type { TestimonialItem } from './sections/Testimonials';
 import WhyUs from './sections/WhyUs';
@@ -34,6 +35,7 @@ export default function Home({
             <Head title="UMKMKITA — Jasa Pembuatan Website Professional untuk UMKM Indonesia" />
             <Hero />
             <Marquee />
+            <Statistic />
             <Services services={services} />
             <Portfolio portfolios={portfolios} />
             <WhyUs advantages={advantages} />

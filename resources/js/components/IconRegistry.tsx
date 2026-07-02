@@ -32,7 +32,7 @@ import {
     Bell,
     Palette,
     Bot,
-    Headset
+    Headset,
 } from 'lucide-react';
 
 export const IconRegistry: Record<string, LucideIcon> = {
@@ -68,7 +68,7 @@ export const IconRegistry: Record<string, LucideIcon> = {
     Bell,
     Palette,
     Bot,
-    Headset
+    Headset,
 };
 
 export const getIconComponent = (name: string): LucideIcon => {

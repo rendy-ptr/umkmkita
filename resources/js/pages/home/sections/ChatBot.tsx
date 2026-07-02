@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { Bot, MessageCircleMore, Send, User, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -30,20 +31,7 @@ const QUICK_REPLIES = [
     'Bagaimana cara daftarnya?',
 ];
 
-async function dummyReply(userText: string): Promise<string> {
-    await new Promise((r) => setTimeout(r, 900 + Math.random() * 600));
-    const lower = userText.toLowerCase();
-
-    if (lower.includes('harga') || lower.includes('biaya')) {
-        return 'Untuk info harga paket, tim kami akan bantu kirimkan penawaran sesuai kebutuhan tokomu. Boleh ceritakan dulu jenis usahanya apa?';
-    }
-
-    if (lower.includes('halo') || lower.includes('hai')) {
-        return 'Halo juga! Senang bisa bantu. Lagi cari solusi apa nih untuk bisnismu?';
-    }
-
-    return 'Catat ya — aku terusin ke tim untuk dibantu lebih lanjut. Ada hal lain yang mau ditanyakan?';
-}
+// Remove dummyReply
 
 export default function ChatBot({
     botName = 'UMKMKITA Assistant',
@@ -86,6 +74,7 @@ export default function ChatBot({
             return;
         }
 
+        // Add user message to state
         setMessages((prev) => [
             ...prev,
             { id: uid(), role: 'user', text: trimmed, time: nowTime() },
@@ -93,21 +82,39 @@ export default function ChatBot({
         setInput('');
         setIsTyping(true);
 
+        // Prepare history for AI (exclude the initial greeting if we want, or keep it)
+        const historyForAi = messages.map((m) => ({
+            role: m.role === 'bot' ? 'assistant' : 'user',
+            content: m.text,
+        }));
+
         try {
-            const replyText = onSendMessage
-                ? await onSendMessage(trimmed)
-                : await dummyReply(trimmed);
+            let replyText = '';
+
+            if (onSendMessage) {
+                // If developer overrides the logic via props
+                replyText = await onSendMessage(trimmed);
+            } else {
+                // Default logic: hit our Laravel backend
+                const { data } = await axios.post('/api/chat', {
+                    message: trimmed,
+                    history: historyForAi,
+                });
+                replyText = data.reply;
+            }
+
             setMessages((prev) => [
                 ...prev,
                 { id: uid(), role: 'bot', text: replyText, time: nowTime() },
             ]);
-        } catch {
+        } catch (error) {
+            console.error('Chat error:', error);
             setMessages((prev) => [
                 ...prev,
                 {
                     id: uid(),
                     role: 'bot',
-                    text: 'Maaf, ada gangguan koneksi. Coba kirim pesanmu lagi ya.',
+                    text: 'Maaf, sistem AI sedang offline atau terjadi gangguan koneksi.',
                     time: nowTime(),
                 },
             ]);
@@ -126,14 +133,13 @@ export default function ChatBot({
     return (
         <div className="fixed right-6 bottom-6 z-50 flex flex-col items-end gap-4 font-sans">
             <div
-                className={`nb-shadow-lg w-[92vw] max-w-[380px] origin-bottom-right overflow-hidden rounded-2xl border-2 border-brand-black bg-brand-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'translate-y-0 scale-100 opacity-100' : 'pointer-events-none translate-y-4 scale-95 opacity-0'}`}
+                className={`nb-shadow-lg w-[92vw] max-w-[380px] origin-bottom-right overflow-hidden rounded-2xl border-2 border-brand-black bg-brand-white transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-y-0 scale-100 opacity-100 pointer-events-auto' : 'pointer-events-none translate-y-4 scale-95 opacity-0'}`}
                 style={{ height: isOpen ? 'min(600px, 70vh)' : 0 }}
                 role="dialog"
                 aria-label="Jendela obrolan asisten AI"
                 aria-hidden={!isOpen}
             >
-                <div className="flex h-full flex-col">
-                    <div className="flex items-center justify-between gap-3 border-b-2 border-brand-black bg-brand-accent px-4 py-3">
+                <div className="flex items-center justify-between gap-3 border-b-2 border-brand-black bg-brand-accent px-4 py-3 flex-none">
                         <div className="flex items-center gap-3">
                             <div className="relative flex h-10 w-10 items-center justify-center rounded-full border-2 border-brand-black bg-brand-white text-brand-black">
                                 <Bot size={22} />
@@ -160,8 +166,9 @@ export default function ChatBot({
 
                     <div
                         ref={scrollRef}
-                        className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
-                        style={{ backgroundColor: 'var(--color-brand-gray-1)' }}
+                        className="flex-1 space-y-3 overflow-y-auto px-4 py-4 min-h-0"
+                        style={{ backgroundColor: 'var(--color-brand-gray-1)', overscrollBehavior: 'contain' }}
+                        data-lenis-prevent="true"
                     >
                         {messages.map((m) => {
                             const isBot = m.role === 'bot';
@@ -226,7 +233,7 @@ export default function ChatBot({
                         )}
                     </div>
 
-                    <div className="relative flex items-center gap-2 border-t-2 border-brand-black bg-brand-white p-3">
+                    <div className="relative flex items-center gap-2 border-t-2 border-brand-black bg-brand-white p-3 flex-none">
                         {showQuickMenu && (
                             <div className="absolute bottom-full left-3 mb-2 flex w-56 animate-[fadeUp_0.2s_ease-out_both] flex-col gap-1 rounded-xl border-2 border-brand-black bg-brand-white p-2 shadow-[2px_2px_0_0_#1A1A1A]">
                                 <div className="px-2 pb-1 text-[10px] font-bold tracking-wider text-brand-gray-4 uppercase">
@@ -272,7 +279,6 @@ export default function ChatBot({
                             <Send size={18} className="-ml-0.5" />
                         </button>
                     </div>
-                </div>
             </div>
 
             <button

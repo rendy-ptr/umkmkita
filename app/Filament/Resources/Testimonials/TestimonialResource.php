@@ -15,7 +15,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class TestimonialResource extends Resource
@@ -59,19 +60,19 @@ class TestimonialResource extends Resource
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('role')
+                TextColumn::make('role')
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('stars')
+                TextColumn::make('stars')
                     ->numeric()
                     ->sortable(),
-                \Filament\Tables\Columns\ToggleColumn::make('is_published'),
-                \Filament\Tables\Columns\TextColumn::make('created_at')
+                ToggleColumn::make('is_published'),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                \Filament\Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

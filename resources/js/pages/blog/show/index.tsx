@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import {
@@ -9,11 +9,13 @@ import {
     Twitter,
     Lock,
     ArrowUpRight,
+    Send,
 } from 'lucide-react';
 import HeroGradient from '@/components/marketing/HeroGradient';
 import MarketingLayout from '@/layouts/marketing-layout';
 import { getImageUrl } from '@/lib/utils';
 import blogRoute from '@/routes/blog';
+import type { Auth } from '@/types/auth';
 import type { BlogItem } from '@/types/blog.type';
 
 const containerVariants: Variants = {
@@ -39,11 +41,27 @@ interface BlogShowProps {
 }
 
 export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
+    const { auth } = usePage<{ auth: Auth }>().props;
+    const isGuest = !auth.user;
+
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: auth.user ? auth.user.name : '',
+        email: auth.user ? auth.user.email : '',
+        content: '',
+    });
+
+    const submitComment = (e: React.FormEvent) => {
+        e.preventDefault();
+        post(blogRoute.comments.store.url(blog.id), {
+            preserveScroll: true,
+            onSuccess: () => reset(),
+        });
+    };
+
     return (
         <MarketingLayout>
             <Head title={`${blog.title} — Blog UMKMKITA`} />
 
-            {/* MEGA EDITORIAL HEADER (NEO-BRUTALISM) */}
             <motion.section
                 initial="hidden"
                 animate="show"
@@ -86,11 +104,11 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                     >
                         <div className="flex items-center gap-5">
                             <div className="flex h-14 w-14 items-center justify-center rounded-full border-4 border-brand-black bg-brand-accent font-display text-2xl font-black text-white">
-                                A
+                                {blog.user?.name?.[0]?.toUpperCase() || 'A'}
                             </div>
                             <div className="text-left">
                                 <div className="font-display text-xl font-black text-brand-black">
-                                    Admin UMKMKITA
+                                    {blog.user?.name || 'Admin UMKMKITA'}
                                 </div>
                                 <div className="font-mono text-xs font-bold tracking-widest text-brand-gray-5 uppercase">
                                     {new Date(
@@ -190,6 +208,212 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                                     </p>
                                 )}
                             </div>
+
+                            <div className="mt-16">
+                                <h2 className="mb-12 flex items-center gap-3 font-display text-2xl font-black text-brand-black lg:text-3xl">
+                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border-2 border-brand-black bg-brand-accent text-sm font-black text-white shadow-[2px_2px_0_0_#1A1A1A]">
+                                        {(blog.content_blocks?.length ?? 0) + 1}
+                                    </span>
+                                    Diskusi
+                                    <span className="ml-auto font-mono text-sm font-bold text-brand-gray-4">
+                                        {blog.comments?.length ?? 0} komentar
+                                    </span>
+                                </h2>
+
+                                {blog.comments && blog.comments.length > 0 ? (
+                                    <div className="mb-16 flex flex-col gap-6">
+                                        {blog.comments.map((comment) => (
+                                            <div
+                                                key={comment.id}
+                                                className="rounded-2xl border-2 border-brand-black bg-brand-white p-5 shadow-[4px_4px_0_0_#1A1A1A] hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
+                                            >
+                                                <div className="mb-4 flex items-start gap-4">
+                                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-brand-black bg-brand-yellow font-display text-lg font-black text-brand-black">
+                                                        {comment.user
+                                                            ? comment.user.name[0].toUpperCase()
+                                                            : comment.name
+                                                              ? comment.name[0].toUpperCase()
+                                                              : 'G'}
+                                                    </div>
+                                                    <div className="min-w-0 flex-1">
+                                                        <div className="flex flex-wrap items-center gap-2">
+                                                            <span className="font-display text-lg font-black text-brand-black">
+                                                                {comment.user
+                                                                    ? comment
+                                                                          .user
+                                                                          .name
+                                                                    : comment.name}
+                                                            </span>
+                                                            {comment.user_id ===
+                                                                blog.user_id && (
+                                                                <span className="rounded-md border-2 border-brand-black bg-brand-accent px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-white uppercase shadow-[2px_2px_0_0_#1A1A1A]">
+                                                                    Penulis
+                                                                </span>
+                                                            )}
+                                                            {comment.user_id &&
+                                                                comment.user_id !==
+                                                                    blog.user_id && (
+                                                                    <span className="rounded-md border-2 border-brand-black bg-brand-black px-2 py-0.5 font-mono text-[10px] font-bold tracking-widest text-white uppercase shadow-[2px_2px_0_0_#1A1A1A]">
+                                                                        Admin
+                                                                    </span>
+                                                                )}
+                                                            <span className="ml-auto font-mono text-xs font-bold tracking-widest text-brand-gray-5 uppercase">
+                                                                {new Date(
+                                                                    comment.created_at,
+                                                                ).toLocaleDateString(
+                                                                    'id-ID',
+                                                                    {
+                                                                        day: 'numeric',
+                                                                        month: 'short',
+                                                                        year: 'numeric',
+                                                                    },
+                                                                )}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p className="text-base leading-relaxed text-brand-gray-5 lg:text-lg">
+                                                    {comment.content}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="mb-16 py-6 text-center font-mono text-sm font-bold tracking-widest text-brand-gray-5 uppercase">
+                                        — Belum ada komentar. Jadilah yang
+                                        pertama! —
+                                    </p>
+                                )}
+
+                                <div>
+                                    <form
+                                        onSubmit={submitComment}
+                                        className="flex flex-col gap-5"
+                                    >
+                                        {isGuest ? (
+                                            <div className="grid gap-4 sm:grid-cols-2">
+                                                <div className="flex flex-col gap-2">
+                                                    <label
+                                                        htmlFor="name"
+                                                        className="font-mono text-xs font-bold tracking-widest text-brand-black uppercase"
+                                                    >
+                                                        Nama
+                                                    </label>
+                                                    <div className="relative flex h-12 w-full items-center rounded-xl border-2 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all focus-within:border-brand-accent hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none">
+                                                        <input
+                                                            type="text"
+                                                            id="name"
+                                                            value={data.name}
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    'name',
+                                                                    e.target
+                                                                        .value,
+                                                                )
+                                                            }
+                                                            className="h-full w-full border-none bg-transparent px-4 font-mono text-sm font-bold text-brand-black placeholder:text-brand-gray-5 focus:ring-0 focus:outline-none"
+                                                            placeholder="Nama Anda"
+                                                        />
+                                                    </div>
+                                                    {errors.name && (
+                                                        <span className="font-mono text-xs font-bold text-red-500">
+                                                            {errors.name}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <label
+                                                        htmlFor="email"
+                                                        className="font-mono text-xs font-bold tracking-widest text-brand-black uppercase"
+                                                    >
+                                                        Email
+                                                    </label>
+                                                    <div className="relative flex h-12 w-full items-center rounded-xl border-2 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all focus-within:border-brand-accent hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none">
+                                                        <input
+                                                            type="email"
+                                                            id="email"
+                                                            value={data.email}
+                                                            onChange={(e) =>
+                                                                setData(
+                                                                    'email',
+                                                                    e.target
+                                                                        .value,
+                                                                )
+                                                            }
+                                                            className="h-full w-full border-none bg-transparent px-4 font-mono text-sm font-bold text-brand-black placeholder:text-brand-gray-5 focus:ring-0 focus:outline-none"
+                                                            placeholder="Email Anda"
+                                                        />
+                                                    </div>
+                                                    {errors.email && (
+                                                        <span className="font-mono text-xs font-bold text-red-500">
+                                                            {errors.email}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="flex items-center gap-3 rounded-xl border-4 border-brand-black bg-brand-green-l px-4 py-3 shadow-[4px_4px_0_0_#1A1A1A]">
+                                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-brand-black bg-brand-accent font-display text-base font-black text-white">
+                                                    {auth.user.name[0].toUpperCase()}
+                                                </div>
+                                                <div>
+                                                    <div className="font-display text-base font-black text-brand-black">
+                                                        {auth.user.name}
+                                                    </div>
+                                                    <div className="font-mono text-[10px] font-bold tracking-widest text-brand-gray-5 uppercase">
+                                                        Penulis
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <div className="flex flex-col gap-2">
+                                            <label
+                                                htmlFor="content"
+                                                className="font-mono text-xs font-bold tracking-widest text-brand-black uppercase"
+                                            >
+                                                Komentar
+                                            </label>
+                                            <div className="relative w-full rounded-xl border-2 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all focus-within:border-brand-accent hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none">
+                                                <textarea
+                                                    id="content"
+                                                    value={data.content}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            'content',
+                                                            e.target.value,
+                                                        )
+                                                    }
+                                                    rows={4}
+                                                    className="w-full resize-none border-none bg-transparent px-4 py-3 font-mono text-sm font-bold text-brand-black placeholder:text-brand-gray-5 focus:ring-0 focus:outline-none"
+                                                    placeholder="Tulis komentar Anda..."
+                                                />
+                                            </div>
+                                            {errors.content && (
+                                                <span className="font-mono text-xs font-bold text-red-500">
+                                                    {errors.content}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <div className="flex justify-end">
+                                            <button
+                                                type="submit"
+                                                disabled={processing}
+                                                className="inline-flex items-center gap-2 rounded-xl border-2 border-brand-black bg-brand-accent px-6 py-3.5 text-sm font-semibold text-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none disabled:cursor-not-allowed disabled:opacity-60"
+                                            >
+                                                <Send
+                                                    size={14}
+                                                    strokeWidth={4}
+                                                />
+                                                {processing
+                                                    ? 'Mengirim...'
+                                                    : 'Kirim Komentar'}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </motion.article>
 
                         <aside className="lg:col-span-4">
@@ -236,13 +460,6 @@ export default function BlogShow({ blog, otherBlogs }: BlogShowProps) {
                                                     )}
                                                     className="group flex flex-col gap-4 rounded-xl border-2 border-brand-black bg-brand-white p-4 shadow-[8px_8px_0_0_#1A1A1A] transition-all hover:translate-x-[8px] hover:translate-y-[8px] hover:shadow-none"
                                                 >
-                                                    {/* <div className="aspect-[16/9] w-full overflow-hidden rounded-xl border-4 border-brand-black bg-brand-gray-1">
-                                                        <img
-                                                            src={other.image}
-                                                            alt={other.title}
-                                                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                        />
-                                                    </div> */}
                                                     <div className="flex flex-col">
                                                         <span className="mb-2 font-mono text-[10px] font-bold tracking-widest text-brand-accent uppercase">
                                                             {other.category &&

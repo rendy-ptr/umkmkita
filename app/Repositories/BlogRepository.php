@@ -11,6 +11,8 @@ class BlogRepository
     public function getFilteredPaginated(BlogFilterData $filters, int $perPage = 10): LengthAwarePaginator
     {
         $query = Blog::query()
+            ->with('user')
+            ->withCount('comments')
             ->where('is_published', true)
             ->when(
                 $filters->search,
@@ -27,6 +29,8 @@ class BlogRepository
     public function getAll()
     {
         return Blog::query()
+            ->with('user')
+            ->withCount('comments')
             ->where('is_published', true)
             ->get();
     }
@@ -34,6 +38,8 @@ class BlogRepository
     public function getById(int $id)
     {
         return Blog::query()
+            ->with(['user', 'comments.user'])
+            ->withCount('comments')
             ->where('is_published', true)
             ->findOrFail($id);
     }
@@ -41,6 +47,8 @@ class BlogRepository
     public function getRelatedBlogs(int $excludeId, int $limit = 3)
     {
         return Blog::query()
+            ->with('user')
+            ->withCount('comments')
             ->where('is_published', true)
             ->where('id', '!=', $excludeId)
             ->limit($limit)
@@ -50,6 +58,8 @@ class BlogRepository
     public function getLatestBlogs(int $limit = 3)
     {
         return Blog::query()
+            ->with('user')
+            ->withCount('comments')
             ->where('is_published', true)
             ->orderBy('published_at', 'desc')
             ->limit($limit)

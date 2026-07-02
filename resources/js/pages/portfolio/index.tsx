@@ -204,7 +204,7 @@ export default function Portfolio({
                                     />
                                 </div>
                                 <h3
-                                    className="mb-4 whitespace-nowrap font-display font-black leading-[1.1] tracking-tight text-brand-black"
+                                    className="mb-4 font-display leading-[1.1] font-black tracking-tight whitespace-nowrap text-brand-black"
                                     style={{
                                         fontSize: 'clamp(28px, 5vw, 56px)',
                                     }}
@@ -214,11 +214,11 @@ export default function Portfolio({
                                         Nggak Ketemu
                                     </em>
                                 </h3>
-                                <p className="mb-10 max-w-[500px] text-base font-medium leading-relaxed text-brand-black/80 lg:text-lg">
+                                <p className="mb-10 max-w-[500px] text-base leading-relaxed font-medium text-brand-black/80 lg:text-lg">
                                     Kami belum menemukan portofolio yang sesuai
                                     dengan pencarian atau kategori Anda saat
-                                    ini. Coba gunakan kata kunci yang lebih
-                                    umum ya!
+                                    ini. Coba gunakan kata kunci yang lebih umum
+                                    ya!
                                 </p>
                                 {(searchQuery || activeTab) && (
                                     <button

@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar, MessageCircle } from 'lucide-react';
 import SectionEyebrow from '@/components/marketing/SectionEyebrow';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
 import blogRoute from '@/routes/blog';
@@ -66,8 +66,15 @@ export default function Blog({ blogs }: BlogProps) {
                                                   .join(', ')
                                             : 'BLOG'}
                                     </span>
-                                    <span className="font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
-                                        {blog.created_at}
+                                    <span className="flex items-center gap-1 font-mono text-[9px] font-medium text-brand-gray-4 uppercase">
+                                        <Calendar size={12} />
+                                        {new Date(
+                                            blog.published_at,
+                                        ).toLocaleDateString('id-ID', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                        })}
                                     </span>
                                 </div>
                                 <h3 className="mb-2 font-display text-[17px] leading-[1.4] font-bold text-brand-black">
@@ -76,7 +83,7 @@ export default function Blog({ blogs }: BlogProps) {
                                 <p className="mb-6 line-clamp-3 text-xs leading-relaxed text-brand-gray-5">
                                     {blog.description}
                                 </p>
-                                <div className="mt-auto border-t border-brand-gray-2 pt-4">
+                                <div className="mt-auto flex items-center justify-between border-t border-brand-gray-2 pt-4">
                                     <Link
                                         href={blogRoute.show.url(blog.id)}
                                         className="inline-flex items-center gap-1.5 font-mono text-xs text-brand-gray-4 transition-colors hover:text-brand-accent"
@@ -84,6 +91,10 @@ export default function Blog({ blogs }: BlogProps) {
                                         Baca Selengkapnya{' '}
                                         <ArrowRight size={12} />
                                     </Link>
+                                    <div className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-brand-gray-4">
+                                        <MessageCircle size={14} />
+                                        <span>{blog.comments_count ?? 0}</span>
+                                    </div>
                                 </div>
                             </div>
                         </article>
