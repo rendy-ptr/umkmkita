@@ -27,11 +27,12 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('UMKMKITA Admin')
+            ->brandName('UmkmKita Dashboard')
             ->font('Inter')
             ->sidebarCollapsibleOnDesktop()
             ->spa()
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->darkMode(false)
             ->colors([
                 'primary' => Color::Emerald,
                 'gray' => Color::Zinc,

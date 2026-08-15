@@ -16,7 +16,7 @@ class BlogsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('hero_image')->label('Gambar'),
+                ImageColumn::make('hero_image')->disk('public')->label('Gambar'),
                 TextColumn::make('title')->searchable()->limit(50)->label('Judul'),
                 TextColumn::make('published_at')->dateTime('d M Y H:i')->sortable()->label('Tgl Publish'),
                 ToggleColumn::make('is_published')->label('Published'),

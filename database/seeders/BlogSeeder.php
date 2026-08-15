@@ -16,7 +16,6 @@ class BlogSeeder extends Seeder
     {
         $data = [
             [
-                'id' => 1,
                 'user_id' => 1,
                 'title' => '7 Alasan UMKM Harus Punya Website di 2026 Bukan Cuma Instagram.',
                 'description' => 'Di era digital yang berkembang sangat pesat, banyak pelaku UMKM merasa cukup hanya dengan memiliki akun Instagram atau TikTok. Namun, tahukah Anda bahwa bergantung 100% pada media sosial adalah strategi yang berisiko?',
@@ -45,7 +44,6 @@ class BlogSeeder extends Seeder
                 'published_at' => '2026-06-28T13:52:18+07:00',
             ],
             [
-                'id' => 2,
                 'user_id' => 1,
                 'title' => 'Panduan Toko Online Sukses: Setup QRIS hingga Integrasi Ongkir.',
                 'description' => 'Memiliki toko online bukan sekadar mengupload gambar produk. Di tahun 2025, konsumen menuntut kemudahan dan kecepatan dalam bertransaksi. Jika proses pembayaran Anda masih manual (cek mutasi manual), Anda berisiko kehilangan pembeli yang tidak sabar.',
@@ -70,7 +68,6 @@ class BlogSeeder extends Seeder
                 'published_at' => '2026-06-27T19:12:30+07:00',
             ],
             [
-                'id' => 3,
                 'user_id' => 1,
                 'title' => 'Bagaimana AI Membantu Website UMKM Konversi Lebih Tinggi.',
                 'description' => 'Artificial Intelligence (AI) bukan lagi sekadar tren teknologi untuk perusahaan besar. Pelaku UMKM kini bisa memanfaatkan AI untuk membuat website mereka bekerja lebih cerdas, bukan lebih keras.',
@@ -114,7 +111,6 @@ class BlogSeeder extends Seeder
 
         for ($i = 4; $i <= 15; $i++) {
             $data[] = [
-                'id' => $i,
                 'user_id' => 1,
                 'title' => $faker->sentence(rand(5, 8)).' (Data Test)',
                 'description' => $faker->paragraph(2),
@@ -141,7 +137,7 @@ class BlogSeeder extends Seeder
         }
 
         foreach ($data as $item) {
-            Blog::updateOrCreate(['id' => $item['id']], $item);
+            Blog::updateOrCreate(['title' => $item['title']], $item);
         }
     }
 }
