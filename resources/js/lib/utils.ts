@@ -13,7 +13,7 @@ export function toUrl(url: NonNullable<InertiaLinkProps['href']>): string {
 
 export function getImageUrl(path?: string): string {
     if (!path) {
-        return 'https://placeholder.com/';
+        return 'https://placehold.co/600x400';
     }
 
     if (path.startsWith('http') || path.startsWith('/')) {

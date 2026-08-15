@@ -66,7 +66,13 @@ export default function Services({ services }: ServiceCardProps) {
                                 </p>
                                 <div className="mt-auto flex items-center justify-between border-t border-brand-gray-2 pt-4">
                                     <span className="font-mono text-xs font-medium text-brand-accent">
-                                        {svc.price}
+                                        Mulai{' '}
+                                        {new Intl.NumberFormat('id-ID', {
+                                            style: 'currency',
+                                            currency: 'IDR',
+                                            minimumFractionDigits: 0,
+                                            maximumFractionDigits: 0,
+                                        }).format(Number(svc.price))}
                                     </span>
                                     <span className="text-lg text-brand-gray-3 transition-all group-hover:translate-x-1 group-hover:text-brand-accent">
                                         →

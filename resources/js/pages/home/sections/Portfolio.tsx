@@ -44,11 +44,11 @@ export default function Portfolio({ portfolios }: PortfolioSectionProps) {
 
                 <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
                     <article className="group flex flex-col overflow-hidden rounded-xl border-[3px] border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none">
-                        <div className="aspect-[4/3] w-full overflow-hidden bg-brand-gray-1">
+                        <div className="aspect-video w-full overflow-hidden bg-brand-gray-1">
                             <img
                                 src={getImageUrl(portfolios[0].hero_image)}
                                 alt={portfolios[0].title}
-                                className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                className="block h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                             />
                         </div>
                         <div className="p-6">
@@ -80,18 +80,18 @@ export default function Portfolio({ portfolios }: PortfolioSectionProps) {
                                 key={p.id}
                                 className="group flex flex-col overflow-hidden rounded-xl border-[3px] border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none sm:flex-row"
                             >
-                                <div className="hidden w-[180px] shrink-0 overflow-hidden bg-brand-gray-1 lg:block">
+                                <div className="hidden w-[240px] shrink-0 overflow-hidden bg-brand-gray-1 lg:block">
                                     <img
                                         src={getImageUrl(p.hero_image)}
                                         alt={p.title}
-                                        className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        className="block h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>
                                 <div className="aspect-[16/9] w-full overflow-hidden bg-brand-gray-1 lg:hidden">
                                     <img
                                         src={getImageUrl(p.hero_image)}
                                         alt={p.title}
-                                        className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        className="block h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                     />
                                 </div>
                                 <div className="hidden flex-1 flex-col justify-center p-5 lg:flex">

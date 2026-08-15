@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Services\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -22,6 +23,12 @@ class ServicesTable
                     ->label('Kategori')
                     ->badge()
                     ->sortable(),
+                ImageColumn::make('images')
+                    ->label('Images')
+                    ->disk('public')
+                    ->stacked()
+                    ->circular()
+                    ->limit(3),
                 TextColumn::make('price')
                     ->label('Harga')
                     ->money('IDR')

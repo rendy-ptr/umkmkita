@@ -8,10 +8,8 @@ class Service extends Model
 {
     protected $guarded = [];
 
-    protected function casts(): array
-    {
-        return [
-            'benefits' => 'array',
-        ];
-    }
+    protected $casts = [
+        'benefits' => 'array',
+        'images' => 'array',
+    ];
 }

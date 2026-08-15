@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Services\Schemas;
 
 use App\Enums\Category;
 use App\Enums\Icon;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\Textarea;
@@ -39,6 +40,14 @@ class ServiceForm
                 TagsInput::make('benefits')
                     ->label('Benefits')
                     ->placeholder('New benefit (press enter)')
+                    ->columnSpanFull()
+                    ->required(),
+                FileUpload::make('images')
+                    ->label('Images')
+                    ->multiple()
+                    ->image()
+                    ->disk('public')
+                    ->directory('services')
                     ->columnSpanFull()
                     ->required(),
             ]);

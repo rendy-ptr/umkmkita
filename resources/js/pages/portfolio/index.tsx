@@ -249,11 +249,11 @@ export default function Portfolio({
                                     key={p.id}
                                     className="group flex flex-col overflow-hidden rounded-xl border-2 border-brand-black bg-brand-white shadow-[4px_4px_0_0_#1A1A1A] transition-all hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
                                 >
-                                    <div className="aspect-[4/3] w-full overflow-hidden border-b-2 border-brand-black bg-brand-gray-2">
+                                    <div className="aspect-video w-full overflow-hidden border-b-2 border-brand-black bg-brand-gray-2">
                                         <img
                                             src={getImageUrl(p.hero_image)}
                                             alt={p.title}
-                                            className="block h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            className="block h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                                         />
                                     </div>
                                     <div className="flex flex-1 flex-col p-6">

@@ -6,4 +6,5 @@ export interface ServiceData {
     description: string;
     price: string;
     benefits: string[];
+    images?: string[];
 }

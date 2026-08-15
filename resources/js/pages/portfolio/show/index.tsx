@@ -49,8 +49,8 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
             >
                 <HeroGradient />
 
-                <div className="section-container relative z-10 mx-auto max-w-7xl">
-                    <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:items-center lg:gap-16">
+                <div className="section-container relative z-10 mx-auto max-w-[1400px]">
+                    <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:items-start lg:gap-16">
                         <motion.div variants={itemVariants}>
                             <Link
                                 href="/"
@@ -126,7 +126,7 @@ export default function PortfolioShow({ portfolio }: PortfolioShowProps) {
                                 <img
                                     src={getImageUrl(portfolio.hero_image)}
                                     alt={`${portfolio.title} showcase`}
-                                    className="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-105"
+                                    className="aspect-video w-full object-cover object-top transition-transform duration-700 hover:scale-105"
                                 />
                             </div>
                         </motion.div>

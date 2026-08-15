@@ -26,7 +26,8 @@ class PortfoliosTable
                     ->searchable(),
                 TextColumn::make('year')
                     ->searchable(),
-                ImageColumn::make('hero_image'),
+                ImageColumn::make('hero_image')
+                    ->disk('public'),
                 TextColumn::make('category')
                     ->badge()
                     ->searchable(),

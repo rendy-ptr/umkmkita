@@ -27,7 +27,14 @@ class ServiceSeeder extends Seeder
                     'Integrasi WhatsApp Order',
                     'Dashboard Laporan Penjualan',
                 ],
-                'price' => 'Mulai Rp 1.500.000',
+                'price' => 1500000,
+                'images' => [
+                    'services/ecommerce/nike.webp',
+                    'services/ecommerce/tokopedia.webp',
+                    'services/ecommerce/indachi.webp',
+                    'services/ecommerce/scarlett.webp',
+                    'services/ecommerce/hakon.webp',
+                ],
             ],
             [
                 'icon' => Icon::GLOBE->value,
@@ -41,7 +48,14 @@ class ServiceSeeder extends Seeder
                     'Formulir Hubungi Kami',
                     'SEO Setup Dasar',
                 ],
-                'price' => 'Mulai Rp 750.000',
+                'price' => 750000,
+                'images' => [
+                    'services/company-profile/glass.webp',
+                    'services/company-profile/lumbung.webp',
+                    'services/company-profile/paragon.webp',
+                    'services/company-profile/tesla.webp',
+                    'services/company-profile/spacex.webp',
+                ],
             ],
             [
                 'icon' => Icon::ROCKET->value,
@@ -55,12 +69,19 @@ class ServiceSeeder extends Seeder
                     'Form Order Langsung WhatsApp',
                     'Loading Speed Super Cepat',
                 ],
-                'price' => 'Mulai Rp 500.000',
+                'price' => 500000,
+                'images' => [
+                    'services/landing-page/linear.webp',
+                    'services/landing-page/masterclass.webp',
+                    'services/landing-page/notion.webp',
+                    'services/landing-page/shopify.webp',
+                    'services/landing-page/stripe.webp',
+                ],
             ],
             [
                 'icon' => Icon::USERS->value,
                 'category' => Category::GOVERNMENT->value,
-                'title' => 'Sistem Informasi Desa & Publik',
+                'title' => 'Sistem Informasi Desa/Lembaga & Layanan Publik',
                 'description' => 'Sistem portal web resmi untuk transparansi anggaran publik, pelayanan administrasi surat online, informasi pariwisata daerah, serta berita kegiatan kemasyarakatan.',
                 'benefits' => [
                     'Pengajuan Surat Online Warga',
@@ -69,7 +90,14 @@ class ServiceSeeder extends Seeder
                     'Sistem Berita & Pengumuman',
                     'Keamanan Berlapis (SSL)',
                 ],
-                'price' => 'Mulai Rp 3.000.000',
+                'price' => 3000000,
+                'images' => [
+                    'services/e-goverment/banyuwangi.webp',
+                    'services/e-goverment/desa-digital.webp',
+                    'services/e-goverment/jabar.webp',
+                    'services/e-goverment/jakarta.webp',
+                    'services/e-goverment/yogya.webp',
+                ],
             ],
             [
                 'icon' => Icon::LAPTOP->value,
@@ -83,7 +111,14 @@ class ServiceSeeder extends Seeder
                     'Sistem Afiliasi & Komisi',
                     'Integrasi Video Aman (Vimeo/S3)',
                 ],
-                'price' => 'Mulai Rp 2.500.000',
+                'price' => 2500000,
+                'images' => [
+                    'services/e-education/buildwithangga.webp',
+                    'services/e-education/domestika.webp',
+                    'services/e-education/kajabi.webp',
+                    'services/e-education/skillshare.webp',
+                    'services/e-education/skillacademy.webp',
+                ],
             ],
             [
                 'icon' => Icon::CALENDAR->value,
@@ -97,7 +132,14 @@ class ServiceSeeder extends Seeder
                     'Notifikasi WhatsApp Reminder',
                     'Kupon Diskon & Membership',
                 ],
-                'price' => 'Mulai Rp 2.000.000',
+                'price' => 2000000,
+                'images' => [
+                    'services/smart-pos/aropi.webp',
+                    'services/smart-pos/fresha.webp',
+                    'services/smart-pos/moka.webp',
+                    'services/smart-pos/watch-party.webp',
+                    'services/smart-pos/wevin.webp',
+                ],
             ],
         ];
 

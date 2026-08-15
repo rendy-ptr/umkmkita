@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('description');
             $table->string('price');
             $table->json('benefits')->nullable();
+            $table->json('images');
             $table->timestamps();
         });
     }

@@ -36,7 +36,7 @@ class PortfolioForm
                 FileUpload::make('hero_image')
                     ->image()
                     ->disk('public')
-                    ->directory('portfolios')
+                    ->directory('portfolio_heros')
                     ->required(),
                 Select::make('category')
                     ->options(Category::class)
